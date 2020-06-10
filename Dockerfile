@@ -1,6 +1,7 @@
 FROM dubeyajit/ubuntu-gnuhealth:v01
 
 RUN apt update && apt install default-jdk -y
+RUN apt-get install nano -y
 
 RUN groupadd tomcat
 RUN useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
@@ -25,6 +26,12 @@ RUN chmod g+x conf
 RUN chown -R tomcat webapps/ work/ temp/ logs/
 #RUN update-java-alternatives -l
 ADD tomcat.service /etc/systemd/system/tomcat.service
+ADD tomcat-users.xml /opt/tomcat/conf/tomcat-users.xml
+ADD context.xml /opt/tomcat/webapps/host-manager/META-INF/context.xml
+ADD context.xml /opt/tomcat/webapps/manager/META-INF/context.xml
+
+RUN wget https://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_2.3.0/openmrs.war
+
 
 #CMD ["./bin/catalina.sh", "start", "&"]
 CMD ["bash"]
