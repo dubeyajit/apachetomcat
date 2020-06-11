@@ -32,6 +32,11 @@ ADD context.xml /opt/tomcat/webapps/manager/META-INF/context.xml
 
 RUN wget https://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_2.3.0/openmrs.war
 
+RUN cp /opt/tomcat/openmrs.war /opt/tomcat/webapps/openmrs.war
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -y
+RUN apt-get install mysql-server -y
 
 #CMD ["./bin/catalina.sh", "start", "&"]
 CMD ["bash"]
